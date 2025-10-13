@@ -1,0 +1,37 @@
+@model QuizApp.Models.Quiz
+
+@{
+    ViewData["Title"] = "Quiz Details";
+}
+
+<h1>@Model.Title</h1>
+<p>@Model.Description</p>
+
+<h4>Questions</h4>
+
+@if (Model.Questions != null && Model.Questions.Any())
+{
+    <ul class="list-group mb-3">
+        @foreach (var question in Model.Questions)
+        {
+            <li class="list-group-item">
+                <strong>@question.QuestionText</strong>
+                @if (question.Answers != null && question.Answers.Any())
+                {
+                    <ul class="mt-2">
+                        @foreach (var answer in question.Answers)
+                        {
+                            <li>@answer.Text @(answer.IsCorrect ? "✅" : "")</li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p><em>No questions yet.</em></p>
+}
+
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>
